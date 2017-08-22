@@ -15,6 +15,7 @@ plugins {
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
@@ -153,5 +154,17 @@ uploadArchives {
 if (ext.'signing.secretKeyRingFile') {
     signing {
         sign configurations.archives
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'com.google.maps'
+            artifactId 'google-maps-services'
+            version project.version
+
+            from components.java
+        }
     }
 }
