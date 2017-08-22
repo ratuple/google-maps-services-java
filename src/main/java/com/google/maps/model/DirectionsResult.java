@@ -36,4 +36,9 @@ public class DirectionsResult {
    * more detail.
    */
   public DirectionsRoute routes[];
+
+  /**
+   * Raw response to be used for forwarding to JavaScriptAPI.
+   */
+  public String rawResponse;
 }

@@ -265,7 +265,11 @@ public class OkHttpPendingResult<T, R extends ApiResponse<T>>
     // Attempt to de-serialize before checking the HTTP status code, as there may be JSON in the
     // body that we can use to provide a more descriptive exception.
     try {
-      resp = gson.fromJson(new String(bytes, "utf8"), responseClass);
+      String responseString = new String(bytes, "utf8");
+      resp = gson.fromJson(responseString, responseClass);
+      if (resp instanceof WithRawResponse) {
+        ((WithRawResponse) resp).setRawResponse(responseString);
+      }
     } catch (JsonSyntaxException e) {
       // Check HTTP status for a more suitable exception
       if (!response.isSuccessful()) {
